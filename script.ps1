@@ -1,13 +1,14 @@
+
 ####################################################################
-#    Powershell Script to move home folders to an attached drive.  #
+#    Powershell Script to move home folders to a network drive.    #
 #                    Created by: github/dylanjamesdev              #
 ####################################################################
 
 
-## Paths to move specific home folders to.
-$desktopPath = 'H:\Desktop';
-$documentsPath = 'H:\Documents';
-$picturesPath = 'H:\Photos'
+## Paths to move specific home folders to. EDIT.
+$desktopPath = 'U:\Desktop';
+$documentsPath = 'U:\Documents';
+$picturesPath = 'U:\Photos'
 
 ## Registry keys to edit
 $key1 = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders";
@@ -21,17 +22,17 @@ function talk ($text) {
 ## Set Desktop
 set-ItemProperty -path $key1 -name Desktop $desktopPath
 set-ItemProperty -path $key2 -name Desktop $desktopPath
-talk('[Desktop] moved to nas successfully')
+talk('[Desktop] moved to server successfully')
 
 ## Set Documents
 set-ItemProperty -path $key1 -name Documents $documentsPath
 set-ItemProperty -path $key2 -name Documents $documentsPath
-talk('[Documents] moved to nas successfully')
+talk('[Documents] moved to server successfully')
 
 ## Set Photos
 Set-ItemProperty -path $key1 -name Pictures $picturesPath
 Set-ItemProperty -path $key2 -name Pictures $picturesPath
-talk('[Pictures] moved to nas successfully')
+talk('[Pictures] moved to server successfully')
 
 ## Alert User
 [reflection.assembly]::loadwithpartialname('System.Windows.Forms')
@@ -39,4 +40,4 @@ talk('[Pictures] moved to nas successfully')
 $notify = new-object system.windows.forms.notifyicon
 $notify.icon = [System.Drawing.SystemIcons]::Information
 $notify.visible = $true
-$notify.showballoontip(30,'WARNING','If your desktop is 
+$notify.showballoontip(30,'WARNING','If your desktop is not mapped to the network drive, logout/login or restart the device.',[system.windows.forms.tooltipicon]::None)
